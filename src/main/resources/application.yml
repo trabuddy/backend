@@ -1,0 +1,18 @@
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${jdbcUrl}
+    username: ${jdbcUsername}
+    password: ${jdbcPassword}
+
+  config:
+    import: optional:file:.env[.yml]
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+server:
+  servlet:
+    context-path: /api
