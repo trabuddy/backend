@@ -16,3 +16,16 @@ spring:
 server:
   servlet:
     context-path: /api
+
+
+kakao:
+  login:
+    restApi: ${restAPI}
+    redirectUri: ${redirectUri}
+
+jwt:
+  accessExpiration: ${accessExpiration}
+  refreshExpiration: ${refreshExpiration}
+
+  secret:
+    key: ${secretKey}
