@@ -38,10 +38,9 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtFilter(jwtUtil, userDetailService()), UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailService())
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/**").permitAll();
-//                    authorizeRequests.requestMatchers("/api/v1/auth/kakao/callback").permitAll();
-//                    authorizeRequests.requestMatchers("/api/v1/auth/kakao/login").permitAll();
-//                    authorizeRequests.requestMatchers("/api/v1/auth/test").hasAnyRole("USER");
+                    authorizeRequests
+                            .requestMatchers("/api/v1/plans/**").authenticated()
+                            .anyRequest().permitAll();
                 });
 
         return http.build();
