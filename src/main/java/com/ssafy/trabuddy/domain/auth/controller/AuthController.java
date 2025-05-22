@@ -1,18 +1,18 @@
 package com.ssafy.trabuddy.domain.auth.controller;
 
+import com.mysema.commons.lang.URLEncoder;
 import com.ssafy.trabuddy.common.jwt.JwtUtil;
 import com.ssafy.trabuddy.domain.auth.KakaoLoginJsonData;
 import com.ssafy.trabuddy.domain.auth.dto.userInfo.KakaoUserInfoResponse;
-import com.ssafy.trabuddy.domain.member.model.dto.LoginMember;
 import com.ssafy.trabuddy.domain.member.service.MemberService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -31,6 +31,8 @@ public class AuthController {
     @Value("${kakao.login.redirectUri}")
     private String redirectUri;
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     @GetMapping("/v1/auth/kakao/login")
     public void kakaoLogin(HttpServletResponse response) throws IOException {
@@ -40,7 +42,7 @@ public class AuthController {
     }
 
     @GetMapping("/v1/auth/kakao/callback")
-    public ResponseEntity<LoginMember> kakaoOauth(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void kakaoOauth(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("enter");
         String code = request.getParameter("code");
         KakaoUserInfoResponse infoResponse = kakaoLoginJsonData.getToken(code);
@@ -51,9 +53,20 @@ public class AuthController {
         memberService.join(infoResponse);
 
         String token = jwtUtil.generateToken(socialId);
-        response.setHeader("Authorization", "Bearer " + token);
 
-        return ResponseEntity.ok(new LoginMember(nickname));
+        // HTTP-only 쿠키에 토큰 저장
+        ResponseCookie cookie = ResponseCookie.from("auth_token", token)
+                .sameSite("none")
+                .secure(true)
+                .path("/")
+                .maxAge(3600)
+                .build();
+
+        response.setHeader("Set-Cookie", cookie.toString());
+        // 닉네임은 쿼리 파라미터로 전달 (닉네임은 민감한 정보가 아니므로)
+        String redirectUrl = String.format("%s?nickname=%s", frontendUrl, URLEncoder.encodeURL(nickname));
+        log.info(redirectUrl);
+        response.sendRedirect(redirectUrl);
     }
 
     @GetMapping("/v1/auth/test")
