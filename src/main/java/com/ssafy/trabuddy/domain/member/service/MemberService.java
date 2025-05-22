@@ -24,6 +24,7 @@ public class MemberService {
         }
 
         MemberEntity user = MemberEntity.builder()
+                .nickname(userInfo.getProperties().getNickname())
                 .socialType(MemberSocialType.kakao)
                 .socialId(userInfo.getId())
                 .build();
