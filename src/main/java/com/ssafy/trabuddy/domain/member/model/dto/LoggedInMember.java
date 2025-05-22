@@ -1,7 +1,9 @@
 package com.ssafy.trabuddy.domain.member.model.dto;
 
 import com.ssafy.trabuddy.domain.member.model.enums.MemberRole;
+import com.ssafy.trabuddy.domain.member.model.enums.MemberSex;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +16,12 @@ import java.util.Collections;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class LoggedInMember implements UserDetails {
-    private String name;
-    private long id;
-    private String email;
+    private long memberId;
+    private int age;
+    private MemberSex sex;
+    private String nickname;
 
     private MemberRole role;
 
@@ -33,7 +37,7 @@ public class LoggedInMember implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.nickname;
     }
 
     @Override

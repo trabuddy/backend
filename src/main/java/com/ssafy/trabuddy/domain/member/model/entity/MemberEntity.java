@@ -4,10 +4,7 @@ import com.ssafy.trabuddy.domain.member.model.enums.MemberRole;
 import com.ssafy.trabuddy.domain.member.model.enums.MemberSex;
 import com.ssafy.trabuddy.domain.member.model.enums.MemberSocialType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -29,10 +26,13 @@ public class MemberEntity {
     private MemberSocialType socialType;
 
     private String socialToken;
+    @Setter
     private String mbti;
+    @Setter
     private int age;
     private String nickname;
     @Enumerated(EnumType.STRING)
+    @Setter
     private MemberSex sex;
 
     @CreatedDate
