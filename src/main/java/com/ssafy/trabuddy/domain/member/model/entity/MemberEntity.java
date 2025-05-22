@@ -31,6 +31,7 @@ public class MemberEntity {
     private String socialToken;
     private String mbti;
     private int age;
+    private String nickname;
     @Enumerated(EnumType.STRING)
     private MemberSex sex;
 
@@ -40,8 +41,9 @@ public class MemberEntity {
     private LocalDateTime unregisteredAt;
 
     @Builder
-    public MemberEntity(long socialId, MemberSocialType socialType) {
+    public MemberEntity(long socialId, MemberSocialType socialType, String nickname) {
         this.socialId = socialId;
         this.socialType = socialType;
+        this.nickname = nickname;
     }
 }
