@@ -27,6 +27,7 @@ public class PlanEntity {
     private long planId;
 
     //TODO: 테마 추가
+    @Setter
     private int themeId;
 
     @CreatedBy
@@ -44,15 +45,21 @@ public class PlanEntity {
 
     @Setter
     private String title;
+    @Setter
     private String description;
+    @Setter
     private String memo;
+    @Setter
     private int people;
 
     @CreatedDate
     private LocalDateTime createdAt;
+    @Setter
     private LocalDateTime deletedAt;
 
+    @Setter
     private LocalDateTime startDate;
+    @Setter
     private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
