@@ -3,6 +3,7 @@ package com.ssafy.trabuddy.domain.plan.controller;
 import com.ssafy.trabuddy.domain.member.model.dto.LoggedInMember;
 import com.ssafy.trabuddy.domain.plan.model.dto.AddPlanRequest;
 import com.ssafy.trabuddy.domain.plan.model.dto.GetPlanResponse;
+import com.ssafy.trabuddy.domain.plan.model.dto.UpdatePlanRequest;
 import com.ssafy.trabuddy.domain.plan.service.PlanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,9 @@ public class PlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("/v1/plans/{planId}")
+    public ResponseEntity<GetPlanResponse> updatePlan(@PathVariable long planId, @Valid @RequestBody UpdatePlanRequest request) {
+        GetPlanResponse response = planService.updatePlan(planId, request);
+        return ResponseEntity.ok(response);
+    }
 }

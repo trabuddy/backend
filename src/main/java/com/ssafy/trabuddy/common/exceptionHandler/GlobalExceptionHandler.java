@@ -1,4 +1,4 @@
-package com.ssafy.trabuddy.common.handler;
+package com.ssafy.trabuddy.common.exceptionHandler;
 
 import com.ssafy.trabuddy.common.error.ErrorCode;
 import com.ssafy.trabuddy.common.error.ErrorResult;
@@ -38,5 +38,4 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getStatusCode())
                 .body(new ErrorResult(errorCode.getMessage()));
     }
-
 }
