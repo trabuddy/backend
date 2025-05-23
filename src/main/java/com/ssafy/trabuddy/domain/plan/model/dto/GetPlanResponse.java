@@ -16,7 +16,7 @@ public class GetPlanResponse {
     private long planId;
     private int themeId;
     private long owenerId;
-    private String owenerNickname;
+    private String ownerNickname;
     private String title;
     private String description;
     private String memo;

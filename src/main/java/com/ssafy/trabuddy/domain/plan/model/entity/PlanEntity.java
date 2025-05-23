@@ -1,16 +1,19 @@
 package com.ssafy.trabuddy.domain.plan.model.entity;
 
 import com.ssafy.trabuddy.domain.plan.enums.PlanVisibility;
+import com.ssafy.trabuddy.domain.planShare.model.entity.PlanShareEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,8 +31,18 @@ public class PlanEntity {
 
     @CreatedBy
     private long ownerId;
+
+    @Setter
     private String ownerNickname;
 
+    @OneToMany(
+            mappedBy = "plan",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<PlanShareEntity> shares = new ArrayList<>();
+
+    @Setter
     private String title;
     private String description;
     private String memo;
@@ -45,7 +58,13 @@ public class PlanEntity {
     @Enumerated(EnumType.STRING)
     private PlanVisibility visibility;
 
-    public PlanEntity(String ownerNickname) {
-        this.ownerNickname = ownerNickname;
+    public void addShare(PlanShareEntity share) {
+        shares.add(share);
+        share.setPlan(this);
+    }
+
+    public void removeShare(PlanShareEntity share) {
+        shares.remove(share);
+        share.setPlan(null);
     }
 }
