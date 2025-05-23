@@ -1,23 +1,19 @@
 package com.ssafy.trabuddy.domain.plan.service;
 
 import com.ssafy.trabuddy.domain.member.model.dto.LoggedInMember;
-import com.ssafy.trabuddy.domain.member.model.entity.MemberEntity;
 import com.ssafy.trabuddy.domain.member.repository.MemberRepository;
-import com.ssafy.trabuddy.domain.member.service.MemberService;
+import com.ssafy.trabuddy.domain.plan.error.PlanErrorCode;
+import com.ssafy.trabuddy.domain.plan.error.PlanNotFoundException;
 import com.ssafy.trabuddy.domain.plan.mapper.PlanMapper;
+import com.ssafy.trabuddy.domain.plan.model.dto.AddPlanRequest;
 import com.ssafy.trabuddy.domain.plan.model.dto.GetPlanResponse;
 import com.ssafy.trabuddy.domain.plan.model.entity.PlanEntity;
 import com.ssafy.trabuddy.domain.plan.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +23,15 @@ public class PlanService {
     private final MemberRepository memberRepository;
 
 
-    public GetPlanResponse addPlan(LoggedInMember loggedInMember) {
-        PlanEntity planEntity = planRepository.save(new PlanEntity(loggedInMember.getNickname()));
+    public GetPlanResponse addPlan(AddPlanRequest addPlanRequest, LoggedInMember loggedInMembers) {
+        PlanEntity planEntity = planRepository.save(PlanMapper.INSTANCE.toPlanEntity(addPlanRequest, loggedInMembers));
+        return PlanMapper.INSTANCE.toGetPlanResponse(planEntity);
+    }
+
+    public GetPlanResponse getPlan(long planId) {
+        PlanEntity planEntity = planRepository
+                .findById(planId)
+                .orElseThrow(() -> new PlanNotFoundException(PlanErrorCode.NOT_FOUND_PLAN));
         return PlanMapper.INSTANCE.toGetPlanResponse(planEntity);
     }
 
