@@ -38,9 +38,18 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtFilter(jwtUtil, userDetailService()), UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailService())
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests
-                            .requestMatchers("/api/v1/plans/**").authenticated()
-                            .anyRequest().permitAll();
+                    authorizeRequests.requestMatchers(
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/v3/api-docs/**",
+                            "/swagger-resources/**",
+                            "/webjars/**",
+                            "/swagger-ui/index.html"
+                    ).permitAll();
+                    authorizeRequests.requestMatchers("/**").permitAll();
+//                    authorizeRequests.requestMatchers("/api/v1/auth/kakao/callback").permitAll();
+//                    authorizeRequests.requestMatchers("/api/v1/auth/kakao/login").permitAll();
+//                    authorizeRequests.requestMatchers("/api/v1/auth/test").hasAnyRole("USER");
                 });
 
         return http.build();
