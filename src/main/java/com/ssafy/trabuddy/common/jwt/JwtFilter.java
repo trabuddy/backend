@@ -28,7 +28,14 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailService;
     private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
 
-    private final String[] excludePath = {"/api/v1/auth/kakao/login", "/api/v1/auth/kakao/callback", "/api/v1/auth/check", "/api/v1/attractions"};
+    private final String[] excludePath = {"/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/swagger-ui/index.html",
+            "/api/v1/auth/kakao/login",
+            "/api/v1/auth/kakao/callback", "/api/v1/auth/check", "/api/v1/attractions"};
     private final String[] planPaths = {"/api/v1/plans"};
 
     @Override
