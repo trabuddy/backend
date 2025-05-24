@@ -3,12 +3,11 @@ package com.ssafy.trabuddy.domain.member.service;
 import com.ssafy.trabuddy.common.util.NullPropertyUtils;
 import com.ssafy.trabuddy.domain.auth.dto.userInfo.KakaoUserInfoResponse;
 import com.ssafy.trabuddy.domain.member.mapper.MemberMapper;
-import com.ssafy.trabuddy.domain.member.model.dto.GetNicknameResponse;
+import com.ssafy.trabuddy.domain.member.model.dto.GetMemberInfoResponse;
 import com.ssafy.trabuddy.domain.member.model.dto.GetProfileResponse;
 import com.ssafy.trabuddy.domain.member.model.dto.LoggedInMember;
 import com.ssafy.trabuddy.domain.member.model.dto.UpdateMypageRequest;
 import com.ssafy.trabuddy.domain.member.model.entity.MemberEntity;
-import com.ssafy.trabuddy.domain.member.model.enums.MemberRole;
 import com.ssafy.trabuddy.domain.member.model.enums.MemberSocialType;
 import com.ssafy.trabuddy.domain.member.repository.MemberRepository;
 import com.ssafy.trabuddy.domain.plan.model.dto.GetPlanResponse;
@@ -46,8 +45,8 @@ public class MemberService {
         memberRepository.save(user);
     }
 
-    public GetNicknameResponse getNickname(LoggedInMember loggedInMember) {
-        return MemberMapper.INSTANCE.nicknameToDto(loggedInMember);
+    public GetMemberInfoResponse getNickname(LoggedInMember loggedInMember) {
+        return MemberMapper.INSTANCE.getMemberInfoResponse(loggedInMember);
     }
 
     public GetProfileResponse getProfile(LoggedInMember loggedInMember) {
