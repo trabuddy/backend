@@ -1,6 +1,6 @@
 package com.ssafy.trabuddy.domain.member.controller;
 
-import com.ssafy.trabuddy.domain.member.model.dto.GetNicknameResponse;
+import com.ssafy.trabuddy.domain.member.model.dto.GetMemberInfoResponse;
 import com.ssafy.trabuddy.domain.member.model.dto.GetProfileResponse;
 import com.ssafy.trabuddy.domain.member.model.dto.LoggedInMember;
 import com.ssafy.trabuddy.domain.member.model.dto.UpdateMypageRequest;
@@ -24,8 +24,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/v1/users/profile")
-    public ResponseEntity<GetNicknameResponse> getNickname(@AuthenticationPrincipal LoggedInMember loggedInMember) {
-        GetNicknameResponse getNicknameResponse = memberService.getNickname(loggedInMember);
+    public ResponseEntity<GetMemberInfoResponse> getNickname(@AuthenticationPrincipal LoggedInMember loggedInMember) {
+        GetMemberInfoResponse getNicknameResponse = memberService.getNickname(loggedInMember);
         return ResponseEntity.ok(getNicknameResponse);
     }
 

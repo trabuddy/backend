@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GetNicknameResponse {
+public class GetMemberInfoResponse {
     private String nickname;
+    private long userId;
 }
