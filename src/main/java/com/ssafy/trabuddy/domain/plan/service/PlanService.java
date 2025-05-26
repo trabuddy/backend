@@ -5,6 +5,7 @@ import com.ssafy.trabuddy.domain.member.model.dto.LoggedInMember;
 import com.ssafy.trabuddy.domain.member.model.entity.MemberEntity;
 import com.ssafy.trabuddy.domain.member.model.enums.MemberRole;
 import com.ssafy.trabuddy.domain.member.repository.MemberRepository;
+import com.ssafy.trabuddy.domain.plan.enums.PlanVisibility;
 import com.ssafy.trabuddy.domain.plan.error.PlanErrorCode;
 import com.ssafy.trabuddy.domain.plan.error.PlanNotFoundException;
 import com.ssafy.trabuddy.domain.plan.mapper.PlanMapper;
@@ -22,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +67,21 @@ public class PlanService {
 
         log.info(planResponses.toString());
         return planResponses;
+    }
+
+    /**
+     * 공개 플랜 목록 조회 (OPEN 상태인 다른 사람의 플랜)
+     */
+    public List<GetPlanResponse> getOpenPlans() {
+        log.info("PlanService - getOpenPlans 시작");
+        
+        List<PlanEntity> openPlans = planRepository.findByVisibilityAndDeletedAtIsNull(PlanVisibility.open);
+        
+        log.info("공개 플랜 조회 완료 - count: {}", openPlans.size());
+        
+        return openPlans.stream()
+                .map(PlanMapper.INSTANCE::toGetPlanResponse)
+                .collect(Collectors.toList());
     }
 
     @Transactional

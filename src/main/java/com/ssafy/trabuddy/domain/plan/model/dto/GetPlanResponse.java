@@ -16,7 +16,7 @@ import java.util.List;
 public class GetPlanResponse {
     private long planId;
     private int themeId;
-    private long owenerId;
+    private long ownerId;
     private String ownerNickname;
     private String title;
     private String description;
