@@ -52,6 +52,21 @@ public class KakaoPlaceSearchService {
     }
 
     /**
+     * 키워드로 장소를 검색합니다 (간단한 버전).
+     *
+     * @param query 검색 키워드
+     * @return 검색 결과
+     */
+    public KakaoPlaceSearchResponse searchPlacesByKeyword(String query) {
+        KakaoPlaceSearchRequest request = KakaoPlaceSearchRequest.builder()
+                .query(query)
+//                .size(1) // 첫 번째 결과만 가져오기
+                .build();
+
+        return searchPlacesByKeyword(request);
+    }
+
+    /**
      * 검색 요청 정보를 기반으로 URI를 생성합니다.
      *
      * @param request 검색 요청 정보
@@ -90,6 +105,6 @@ public class KakaoPlaceSearchService {
             builder.queryParam("sort", request.getSort());
         }
 
-        return builder.build().toUri();
+        return builder.build(true).toUri();
     }
 }

@@ -4,6 +4,7 @@ import com.ssafy.trabuddy.domain.area.model.entity.AreaEntity;
 import com.ssafy.trabuddy.domain.sigungu.model.entity.SigunguEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "attraction")
 public class AttractionEntity {
     @Id
