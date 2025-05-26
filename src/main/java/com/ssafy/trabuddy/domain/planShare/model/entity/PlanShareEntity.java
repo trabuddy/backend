@@ -33,10 +33,13 @@ public class PlanShareEntity {
 
     @CreatedDate
     private LocalDateTime joinedAt;
+    @Setter
     private LocalDateTime leftAt;
 
+    @Setter
     private String nickname;
     @Enumerated(EnumType.STRING)
+    @Setter
     private MemberRole role;
 
     @Builder
