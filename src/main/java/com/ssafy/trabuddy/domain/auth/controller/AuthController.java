@@ -55,7 +55,7 @@ public class AuthController {
         String token = jwtUtil.generateToken(socialId);
 
         // HTTP-only 쿠키에 토큰 저장
-        ResponseCookie cookie = ResponseCookie.from("auth_token", token)
+        ResponseCookie cookie = ResponseCookie.from("auth_token", "Bearer " + token)
                 .sameSite("none")
                 .secure(true)
                 .path("/")
