@@ -8,6 +8,7 @@ import com.ssafy.trabuddy.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -36,20 +37,23 @@ public class SecurityConfig {
                 .sessionManagement(config ->
                         config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtFilter(jwtUtil, userDetailService()), UsernamePasswordAuthenticationFilter.class)
-                .userDetailsService(userDetailService())
                 .authorizeHttpRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+//                    authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/plans/**").permitAll();
                     authorizeRequests.requestMatchers(
-                            "/swagger-ui/**",
-                            "/swagger-ui.html",
-                            "/v3/api-docs/**",
-                            "/swagger-resources/**",
-                            "/webjars/**",
-                            "/swagger-ui/index.html"
+                            "/api/swagger-ui/**",
+                            "/api/swagger-ui.html",
+                            "/api/v3/api-docs/**",
+                            "/api/swagger-resources/**",
+                            "/api/webjars/**",
+                            "/api/swagger-ui/index.html",
+                            "/api/v1/auth/kakao/callback",
+                            "/api/v1/auth/kakao/login",
+                            "/api/v1/auth/check",
+                            "/api/v1/attractions"
                     ).permitAll();
                     authorizeRequests.requestMatchers("/**").permitAll();
-//                    authorizeRequests.requestMatchers("/api/v1/auth/kakao/callback").permitAll();
-//                    authorizeRequests.requestMatchers("/api/v1/auth/kakao/login").permitAll();
-//                    authorizeRequests.requestMatchers("/api/v1/auth/test").hasAnyRole("USER");
+//                    authorizeRequests.anyRequest().authenticated();
                 });
 
         return http.build();
