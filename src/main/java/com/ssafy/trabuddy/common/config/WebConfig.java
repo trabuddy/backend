@@ -1,5 +1,6 @@
 package com.ssafy.trabuddy.common.config;
 
+import com.ssafy.trabuddy.domain.invite.interceptor.PlanOwnerInterceptor;
 import com.ssafy.trabuddy.domain.member.service.MemberService;
 import com.ssafy.trabuddy.domain.plan.interceptor.CheckAuthorizationForPlanInterceptor;
 import com.ssafy.trabuddy.domain.plan.service.PlanService;
@@ -19,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final MemberService memberService;
     private final PlanService planService;
     private final PointService pointService;
+    private final PlanOwnerInterceptor planOwnerInterceptor;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -35,5 +37,13 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new CheckAuthorizationInterceptor(pointService))
                 .addPathPatterns("/api/v1/plans/*/points/**");
+
+        // 초대 링크 생성 시 주최자 권한 체크
+        registry.addInterceptor(planOwnerInterceptor)
+                .addPathPatterns("/api/v1/plans/*/invite");
+
+        // 참여자 관리 시 주최자 권한 체크 (PUT, DELETE만)
+        registry.addInterceptor(planOwnerInterceptor)
+                .addPathPatterns("/api/v1/plans/*/participants/*");
     }
 }
