@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +56,7 @@ public class AuthController {
         String token = jwtUtil.generateToken(socialId);
 
         // HTTP-only 쿠키에 토큰 저장
-        ResponseCookie cookie = ResponseCookie.from("auth_token", "Bearer " + token)
+        ResponseCookie cookie = ResponseCookie.from("auth_token", token)
                 .sameSite("none")
                 .secure(true)
                 .path("/")
@@ -67,21 +68,5 @@ public class AuthController {
         String redirectUrl = String.format("%s?nickname=%s", frontendUrl, URLEncoder.encodeURL(nickname));
         log.info(redirectUrl);
         response.sendRedirect(redirectUrl);
-    }
-
-    @GetMapping("/v1/auth/test")
-    public String test() {
-        log.error("enter Test");
-        return "test";
-    }
-
-    @GetMapping("/v1/auth/check")
-    public String check() {
-        return "redirectTest";
-    }
-
-    @GetMapping("/v1/auth/check2")
-    public String check2() {
-        return "redirectTest2";
     }
 }
