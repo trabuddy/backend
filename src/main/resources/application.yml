@@ -25,6 +25,8 @@ kakao:
   login:
     restApi: ${restAPI}
     redirectUri: ${redirectUri}
+  local:
+    restApi: ${restAPI}
 
 jwt:
   accessExpiration: ${accessExpiration}
