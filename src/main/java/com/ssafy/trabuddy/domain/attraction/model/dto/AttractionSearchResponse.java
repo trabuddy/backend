@@ -4,6 +4,7 @@ import com.ssafy.trabuddy.domain.area.model.entity.AreaEntity;
 import com.ssafy.trabuddy.domain.sigungu.model.entity.SigunguEntity;
 import lombok.*;
 
+import com.ssafy.trabuddy.domain.attraction.model.enums.AttractionSource;
 import java.time.LocalDateTime;
 
 @Getter
@@ -33,6 +34,8 @@ public class AttractionSearchResponse {
     private String firstImageThumbnailUrl;
     private String copyrightDivisionCode;
     private String booktourInfo;
+
+    private AttractionSource source;
 
     private SigunguEntity sigungu;
 

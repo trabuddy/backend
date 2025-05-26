@@ -4,15 +4,18 @@ import com.ssafy.trabuddy.domain.area.model.entity.AreaEntity;
 import com.ssafy.trabuddy.domain.sigungu.model.entity.SigunguEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.ssafy.trabuddy.domain.attraction.model.enums.AttractionSource;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "attraction")
 public class AttractionEntity {
     @Id
@@ -38,6 +41,9 @@ public class AttractionEntity {
     private String firstImageThumbnailUrl;
     private String copyrightDivisionCode;
     private String booktourInfo;
+
+    @Enumerated(EnumType.STRING)
+    private AttractionSource source;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sigungu_code")
