@@ -2,10 +2,7 @@ package com.ssafy.trabuddy.domain.member.model.dto;
 
 import com.ssafy.trabuddy.domain.member.model.enums.MemberRole;
 import com.ssafy.trabuddy.domain.member.model.enums.MemberSex;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
