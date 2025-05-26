@@ -136,10 +136,7 @@ public class PlanService {
             try {
                 // 카카오 장소 검색 실행
                 KakaoPlaceSearchResponse kakaoResponse = kakaoPlaceSearchService.searchPlacesByKeyword(
-                        URLEncoder.encode(
-                        recommendation.name()
-                        , "UTF-8")
-                );
+                        URLEncoder.encode(recommendation.name(), "UTF-8"));
 
                 // 검색 결과가 있는 경우
                 if (kakaoResponse != null &&
