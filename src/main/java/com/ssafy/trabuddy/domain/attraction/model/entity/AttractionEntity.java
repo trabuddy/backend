@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.ssafy.trabuddy.domain.attraction.model.enums.AttractionSource;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,6 +39,9 @@ public class AttractionEntity {
     private String firstImageThumbnailUrl;
     private String copyrightDivisionCode;
     private String booktourInfo;
+
+    @Enumerated(EnumType.STRING)
+    private AttractionSource source;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sigungu_code")
