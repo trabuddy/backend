@@ -59,4 +59,9 @@ public class AttractionService {
                         .toSigunguResponse(sigunguEntity, Integer.parseInt(areaCode)))
                 .toList();
     }
+
+    public AttractionEntity findById(long attractionId) {
+        return attractionRepository.findById(attractionId)
+                .orElseThrow(() -> new IllegalArgumentException("attraction not found"));
+    }
 }

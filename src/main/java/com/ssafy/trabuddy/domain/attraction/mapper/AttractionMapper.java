@@ -1,6 +1,7 @@
 package com.ssafy.trabuddy.domain.attraction.mapper;
 
 import com.ssafy.trabuddy.domain.attraction.model.dto.AttractionSearchResponse;
+import com.ssafy.trabuddy.domain.attraction.model.dto.GetAttractionResponse;
 import com.ssafy.trabuddy.domain.attraction.model.entity.AttractionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,6 +14,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AttractionMapper {
     AttractionMapper INSTANCE = Mappers.getMapper(AttractionMapper.class);
+
+    GetAttractionResponse toGetAttractionResponse(AttractionEntity attractionEntity);
 
     @Mapping(source = "attractionId", target = "id")
     AttractionSearchResponse toAttractionSearchResponse(AttractionEntity attractionEntity);

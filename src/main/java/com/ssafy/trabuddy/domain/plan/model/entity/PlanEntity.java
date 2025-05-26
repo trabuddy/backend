@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -41,7 +42,7 @@ public class PlanEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<PlanShareEntity> shares = new ArrayList<>();
+    private List<PlanShareEntity> participants = new ArrayList<>();
 
     @Setter
     private String title;
@@ -63,15 +64,15 @@ public class PlanEntity {
     private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
-    private PlanVisibility visibility;
+    private PlanVisibility visibility = PlanVisibility.hidden;
 
     public void addShare(PlanShareEntity share) {
-        shares.add(share);
+        participants.add(share);
         share.setPlan(this);
     }
 
     public void removeShare(PlanShareEntity share) {
-        shares.remove(share);
+        participants.remove(share);
         share.setPlan(null);
     }
 }

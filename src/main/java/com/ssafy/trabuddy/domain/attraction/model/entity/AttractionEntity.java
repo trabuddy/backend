@@ -39,11 +39,11 @@ public class AttractionEntity {
     private String copyrightDivisionCode;
     private String booktourInfo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sigungu_code")
     private SigunguEntity sigungu;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area_code")
     private AreaEntity area;
 
