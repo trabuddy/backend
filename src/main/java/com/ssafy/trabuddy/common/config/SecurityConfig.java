@@ -31,12 +31,17 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
 
     @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(jwtUtil, userDetailService());
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(HttpBasicConfigurer::disable)
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(config ->
                         config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtFilter(jwtUtil, userDetailService()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 //                    authorizeRequests.requestMatchers(HttpMethod.GET, "/api/v1/plans/**").permitAll();
@@ -50,10 +55,16 @@ public class SecurityConfig {
                             "/api/v1/auth/kakao/callback",
                             "/api/v1/auth/kakao/login",
                             "/api/v1/auth/check",
+                            "/api/v1/auth/test",
                             "/api/v1/attractions"
                     ).permitAll();
-                    authorizeRequests.requestMatchers("/**").permitAll();
-//                    authorizeRequests.anyRequest().authenticated();
+                    // 인증이 필요한 API들
+                    authorizeRequests.requestMatchers(
+                            "/api/v1/users/**",
+                            "/api/v1/plans/**"
+                    ).authenticated();
+                    // 나머지 요청들은 일단 허용하되, 인증된 요청은 처리
+                    authorizeRequests.anyRequest().permitAll();
                 });
 
         return http.build();
