@@ -37,9 +37,4 @@ public class PointController {
         pointService.deletePoint(pointId);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/v1/plans/join")
-    public ResponseEntity<Void> test1() {
-        return ResponseEntity.noContent().build();
-    }
 }
