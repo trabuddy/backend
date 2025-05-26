@@ -60,7 +60,7 @@ public class KakaoPlaceSearchService {
     public KakaoPlaceSearchResponse searchPlacesByKeyword(String query) {
         KakaoPlaceSearchRequest request = KakaoPlaceSearchRequest.builder()
                 .query(query)
-//                .size(1) // 첫 번째 결과만 가져오기
+                .size(1) // 첫 번째 결과만 가져오기
                 .build();
 
         return searchPlacesByKeyword(request);
