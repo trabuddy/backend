@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -26,5 +27,6 @@ public class GetPlanResponse {
     private LocalDateTime endDate;
 
     private PlanVisibility visibility;
-
+    
+//    private List<PlanShareResponse> participants;
 }
