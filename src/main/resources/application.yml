@@ -11,6 +11,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 server:
   servlet:
     context-path: /api
@@ -30,6 +35,8 @@ jwt:
 
 frontend:
   url: ${fronendUrl}
+
+
 
 springdoc:
   api-docs:
